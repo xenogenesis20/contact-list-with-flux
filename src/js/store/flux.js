@@ -15,7 +15,7 @@ const getState = ({ getStore, setStore }) => {
 						}
 						return response.json();
 					})
-					.then(data => setStore({ contact: data }))
+					.then(data => setStore({ contacts: data }))
 					.catch(error => console.log("There was an error"));
 			},
 			postFetch: contact => {

@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-
+import { GlobalState } from "../store/appContext";
 import { ContactCard } from "../component/ContactCard.js";
 import { Modal } from "../component/Modal";
 
 export const Contacts = () => {
+	const { actions, store } = useContext(GlobalState);
 	const [state, setState] = useState({
 		showModal: false
 	});
+
+	console.log(store.contacts);
 
 	return (
 		<div className="container">
@@ -19,10 +22,13 @@ export const Contacts = () => {
 				</p>
 				<div id="contacts" className="panel-collapse collapse show" aria-expanded="true">
 					<ul className="list-group pull-down" id="contact-list">
-						<ContactCard onDelete={() => setState({ showModal: true })} />
-						<ContactCard />
-						<ContactCard />
-						<ContactCard />
+						{/* <ContactCard onDelete={() => setState({ showModal: true })} /> */}
+
+						{store.contacts.map((contact, index) => (
+							<React.Fragment key={contact.id}>
+								<ContactCard entity={contact} />
+							</React.Fragment>
+						))}
 					</ul>
 				</div>
 			</div>
