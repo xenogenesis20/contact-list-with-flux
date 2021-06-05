@@ -9,6 +9,7 @@ export const ContactCard = props => {
 	const [state, setState] = useState({
 		//initialize state here
 	});
+	console.log(props.entity.id);
 
 	return (
 		<li className="list-group-item">
@@ -21,9 +22,12 @@ export const ContactCard = props => {
 						<button className="btn">
 							<i className="fas fa-pencil-alt mr-3" />
 						</button>
-						<button className="btn" onClick={() => props.onDelete()}>
+						<button className="btn" onClick={() => actions.deleteFetch(props.entity.id)}>
 							<i className="fas fa-trash-alt" />
 						</button>
+						{/* <button className="btn" onClick={() => props.onDelete()}>
+							<i className="fas fa-trash-alt" />
+						</button> */}
 					</div>
 					<label className="name lead">{props.entity.full_name}</label>
 					<br />

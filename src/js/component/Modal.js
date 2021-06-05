@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
+import { GlobalState } from "../store/appContext";
 
 export const Modal = props => {
 	const [state, setState] = useState({
 		//initialize state here
 	});
+	const { store, actions } = useContext(GlobalState);
 	return (
 		<div className="modal" tabIndex="-1" role="dialog" style={{ display: props.show ? "inline-block" : "none" }}>
 			<div className="modal-dialog" role="document">
@@ -32,7 +34,11 @@ export const Modal = props => {
 						<button type="button" className="btn btn-primary">
 							Oh no!
 						</button>
-						<button type="button" className="btn btn-secondary" data-dismiss="modal">
+						<button
+							onClick={() => actions.deleteFetch(id)}
+							type="button"
+							className="btn btn-secondary"
+							data-dismiss="modal">
 							Do it!
 						</button>
 					</div>

@@ -25,9 +25,9 @@ export const Contacts = () => {
 						{/* <ContactCard onDelete={() => setState({ showModal: true })} /> */}
 
 						{store.contacts.map((contact, index) => (
-							<React.Fragment key={contact.id}>
-								<ContactCard entity={contact} />
-							</React.Fragment>
+							<div key={contact.id}>
+								<ContactCard entity={contact} onDelete={() => setState({ showModal: true })} />
+							</div>
 						))}
 					</ul>
 				</div>

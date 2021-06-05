@@ -38,6 +38,33 @@ const getState = ({ getStore, setStore }) => {
 						}
 						return response.json();
 					})
+					.then(data => {
+						fetch("https://assets.breatheco.de/apis/fake/contact/agenda/pizza")
+							.then(response => {
+								if (!response.ok) {
+									throw Error(response.statusText);
+								}
+								return response.json();
+							})
+							.then(data => setStore({ contacts: data }))
+							.catch(error => console.log("There was an error"));
+					})
+					.catch(error => console.log("There was an error"));
+			},
+			deleteFetch: id => {
+				fetch("https://assets.breatheco.de/apis/fake/contact/" + id, {
+					method: "DELETE",
+					body: JSON.stringify(), // data can be `string` or {object}!
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(response => {
+						if (!response.ok) {
+							throw Error(response.statusText);
+						}
+						return response.json();
+					})
 					.then(data => console.log(data))
 					.catch(error => console.log("There was an error"));
 			}
