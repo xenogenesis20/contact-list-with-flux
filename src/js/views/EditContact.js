@@ -1,11 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-export const EditContact = () => {
+export const EditContact = props => {
+	// let locationProps = useLocation().state.props;
 	return (
 		<div className="container">
 			<div>
-				<h1 className="text-center mt-5">Add a new contact</h1>
+				<h1 className="text-center mt-5">Edit a contact</h1>
 				<form>
 					<div className="form-group">
 						<label>Full Name</label>
