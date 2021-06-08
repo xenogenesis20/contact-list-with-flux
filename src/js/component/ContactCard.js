@@ -20,23 +20,17 @@ export const ContactCard = props => {
 				</div>
 				<div className="col-12 col-sm-6 col-md-9 text-center text-sm-left">
 					<div className=" float-right">
-						<Link
-							to={{
-								pathname: "/edit",
-								state: {
-									props
-								}
-							}}>
+						<Link to={"/edit/" + props.entity.id}>
 							<button className="btn">
 								<i className="fas fa-pencil-alt mr-3" />
 							</button>
 						</Link>
-						<button className="btn" onClick={() => actions.deleteFetch(props.entity.id)}>
-							<i className="fas fa-trash-alt" />
-						</button>
-						{/* <button className="btn" onClick={() => props.onDelete()}>
+						{/* <button className="btn" onClick={() => actions.deleteFetch(props.entity.id)}>
 							<i className="fas fa-trash-alt" />
 						</button> */}
+						<button className="btn" onClick={() => props.onDelete()}>
+							<i className="fas fa-trash-alt" />
+						</button>
 					</div>
 					<label className="name lead">{props.entity.full_name}</label>
 					<br />

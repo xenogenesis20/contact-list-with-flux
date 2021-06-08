@@ -1,28 +1,96 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
+import { GlobalState } from "../store/appContext";
 
 export const EditContact = props => {
 	// let locationProps = useLocation().state.props;
+	useEffect(() => {
+		// actions.getSingleContactFetch(contact.id)
+		fetch("https://assets.breatheco.de/apis/fake/contact/" + props.match.params.id)
+			.then(response => {
+				if (!response.ok) {
+					throw Error(response.statusText);
+				}
+				return response.json();
+			})
+			.then(data =>
+				setEditedContact({
+					full_name: data.full_name,
+					email: data.email,
+					phone: data.phone,
+					address: data.address,
+					id: data.id
+				})
+			)
+			.catch(error => console.log("There was an error"));
+	}, []);
+	const { actions, store } = useContext(GlobalState);
+
+	let contact = store.contacts.find(con => con.id == props.match.params.id);
+	const [editedContact, setEditedContact] = useState({
+		full_name: "",
+		email: "",
+		phone: "",
+		address: "",
+		id: ""
+	});
+
+	const handleInput = e => {
+		setEditedContact({
+			...editedContact,
+			[e.target.name]: e.target.value
+		});
+	};
+
 	return (
 		<div className="container">
 			<div>
-				<h1 className="text-center mt-5">Edit a contact</h1>
+				<h1 className="text-center mt-5">Edit contact {editedContact.id}</h1>
 				<form>
 					<div className="form-group">
 						<label>Full Name</label>
-						<input type="text" className="form-control" placeholder="Full Name" />
+						<input
+							onChange={handleInput}
+							type="text"
+							className="form-control"
+							name="full_name"
+							placeholder="Full Name"
+							value={editedContact.full_name}
+						/>
 					</div>
 					<div className="form-group">
 						<label>Email</label>
-						<input type="email" className="form-control" placeholder="Enter email" />
+						<input
+							onChange={handleInput}
+							type="email"
+							className="form-control"
+							placeholder="Enter email"
+							value={editedContact.email}
+							name="email"
+						/>
 					</div>
 					<div className="form-group">
 						<label>Phone</label>
-						<input type="phone" className="form-control" placeholder="Enter phone" />
+						<input
+							onChange={handleInput}
+							type="phone"
+							className="form-control"
+							placeholder="Enter phone"
+							value={editedContact.phone}
+							name="phone"
+						/>
 					</div>
 					<div className="form-group">
 						<label>Address</label>
-						<input type="text" className="form-control" placeholder="Enter address" />
+						<input
+							onChange={handleInput}
+							type="text"
+							className="form-control"
+							placeholder="Enter address"
+							value={editedContact.address}
+							name="address"
+						/>
 					</div>
 					<button type="button" className="btn btn-primary form-control">
 						save
@@ -34,4 +102,8 @@ export const EditContact = props => {
 			</div>
 		</div>
 	);
+};
+EditContact.propTypes = {
+	history: PropTypes.object,
+	match: PropTypes.object
 };

@@ -1,4 +1,4 @@
-const getState = ({ getStore, setStore }) => {
+const getState = ({ getStore, setStore, getActions }) => {
 	return {
 		store: {
 			//Your data structures, A.K.A Entities
@@ -7,6 +7,17 @@ const getState = ({ getStore, setStore }) => {
 		actions: {
 			//(Arrow) Functions that update the Store
 			// Remember to use the scope: scope.state.store & scope.setState()
+			// getSingleContactFetch: (id) => {
+			// 	fetch("https://assets.breatheco.de/apis/fake/contact/" + id)
+			// 		.then(response => {
+			// 			if (!response.ok) {
+			// 				throw Error(response.statusText);
+			// 			}
+			// 			return response.json();
+			// 		})
+			// 		.then(data => setStore({ contacts: data }))
+			// 		.catch(error => console.log("There was an error"));
+			// },
 			getFetch: () => {
 				fetch("https://assets.breatheco.de/apis/fake/contact/agenda/pizza")
 					.then(response => {
@@ -39,25 +50,14 @@ const getState = ({ getStore, setStore }) => {
 						return response.json();
 					})
 					.then(data => {
-						fetch("https://assets.breatheco.de/apis/fake/contact/agenda/pizza")
-							.then(response => {
-								if (!response.ok) {
-									throw Error(response.statusText);
-								}
-								return response.json();
-							})
-							.then(data => setStore({ contacts: data }))
-							.catch(error => console.log("There was an error"));
+						getActions().getFetch();
+						//add return to check data
 					})
 					.catch(error => console.log("There was an error"));
 			},
 			deleteFetch: id => {
 				fetch("https://assets.breatheco.de/apis/fake/contact/" + id, {
-					method: "DELETE",
-					body: JSON.stringify(), // data can be `string` or {object}!
-					headers: {
-						"Content-Type": "application/json"
-					}
+					method: "DELETE"
 				})
 					.then(response => {
 						if (!response.ok) {
@@ -65,7 +65,7 @@ const getState = ({ getStore, setStore }) => {
 						}
 						return response.json();
 					})
-					.then(data => console.log(data))
+					.then(data => getActions().getFetch())
 					.catch(error => console.log("There was an error"));
 			}
 		}
