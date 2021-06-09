@@ -10,6 +10,9 @@ export const Contacts = () => {
 		showModal: false,
 		id: 0
 	});
+	const stateSetter = contactId => {
+		setState({ showModal: true, id: contactId });
+	};
 
 	console.log(store.contacts);
 
@@ -27,12 +30,11 @@ export const Contacts = () => {
 
 						{store.contacts &&
 							store.contacts.map((contact, index) => (
-								<div key={contact.id}>
-									<ContactCard
-										entity={contact}
-										onDelete={() => setState({ showModal: true, id: contact.id })}
-									/>
-								</div>
+								<ContactCard
+									key={contact.id}
+									entity={contact}
+									onDelete={() => stateSetter(contact.id)}
+								/>
 							))}
 					</ul>
 				</div>

@@ -4,9 +4,16 @@ import PropTypes from "prop-types";
 import { GlobalState } from "../store/appContext";
 
 export const EditContact = props => {
-	// let locationProps = useLocation().state.props;
+	const [editedContact, setEditedContact] = useState({
+		full_name: "",
+		email: "",
+		phone: "",
+		address: "",
+		id: ""
+	});
+	const { actions, store } = useContext(GlobalState);
+
 	useEffect(() => {
-		// actions.getSingleContactFetch(contact.id)
 		fetch("https://assets.breatheco.de/apis/fake/contact/" + props.match.params.id)
 			.then(response => {
 				if (!response.ok) {
@@ -25,16 +32,8 @@ export const EditContact = props => {
 			)
 			.catch(error => console.log("There was an error"));
 	}, []);
-	const { actions, store } = useContext(GlobalState);
 
 	let contact = store.contacts.find(con => con.id == props.match.params.id);
-	const [editedContact, setEditedContact] = useState({
-		full_name: "",
-		email: "",
-		phone: "",
-		address: "",
-		id: ""
-	});
 
 	const handleInput = e => {
 		setEditedContact({
@@ -92,9 +91,14 @@ export const EditContact = props => {
 							name="address"
 						/>
 					</div>
-					<button type="button" className="btn btn-primary form-control">
-						save
-					</button>
+					<Link className="mt-3 w-100 text-center" to="/">
+						<button
+							type="button"
+							className="btn btn-primary form-control"
+							onClick={actions.updateFetch(editedContact)}>
+							save
+						</button>
+					</Link>
 					<Link className="mt-3 w-100 text-center" to="/">
 						or get back to contacts
 					</Link>
