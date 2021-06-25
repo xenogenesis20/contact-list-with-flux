@@ -11,7 +11,7 @@ export const Contacts = () => {
 		id: 0
 	});
 	const stateSetter = contactId => {
-		setState({ showModal: true, id: contactId });
+		setState({ showModal: true});
 	};
 
 	console.log(store.contacts);
